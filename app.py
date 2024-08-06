@@ -1,7 +1,7 @@
 from tokenize import Number
 import numpy.testing as npt
 from numpy.lib.type_check import imag
-import pygame ,sys
+import pygame, sys
 from pygame import image
 from pygame.locals import *
 import numpy as np
@@ -28,7 +28,6 @@ LABELS={0:"Zero",1:"One",
         8:"Eight",9:"Nine"}
 
 pygame.init()
-
 
 FONT=pygame.font.SysFont("arial",18)
 DISPLAYSURF=pygame.display.set_mode((WINDOWSIZEX, WINDOWSIZEY)) 
@@ -57,13 +56,11 @@ while True:
         if event.type ==MOUSEBUTTONDOWN:
             iswriting= True
 
-        
         if event.type == MOUSEBUTTONUP:
             iswriting=False
             number_xcord = sorted(number_xcord)
             number_ycord = sorted(number_ycord)
-            
-            
+                  
             if len(number_xcord) > 0:
                 rect_min_x = max(number_xcord[0]-BOUNDRYINC, 0)
             else:
@@ -88,8 +85,7 @@ while True:
             number_ycord=[]
 
             img_arr= np.array(pygame.PixelArray(DISPLAYSURF))[rect_min_x:rect_max_x,rect_min_Y:rect_max_Y].T.astype(np.float32)
-            
-            
+                        
             #number_xcord=[]
             #number_ycord=[]
             
@@ -103,8 +99,7 @@ while True:
                 image=cv2.resize(img_arr,(28,28))
                 image=np.pad(image,(10,10),'constant',constant_values=0)
                 image=cv2.resize(image,(28,28))/255
-                
-                
+                               
                 label=str(LABELS[np.argmax(MODEL.predict(image.reshape(1,28,28,1)))])
                 
                 textSurface= FONT.render(label,True,RED,WHITE)
@@ -117,14 +112,9 @@ while True:
                 textRecObj.left, textRecObj.bottom= rect_min_x,rect_max_Y
                 
                 DISPLAYSURF.blit(textSurface, textRecObj)
-                
-                
+                           
             if event.type== KEYDOWN:
                 if event.unicode =="n":
                     DISPLAYSURF.fill(BLACK) 
-                    
-                    
-    pygame.display.update()                  
-                    
-                    
-                            
+                                        
+    pygame.display.update()                                              
